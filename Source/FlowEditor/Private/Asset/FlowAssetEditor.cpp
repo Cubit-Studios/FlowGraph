@@ -205,6 +205,9 @@ void FFlowAssetEditor::DoPresaveAssetUpdate()
 			FlowGraph->OnSave();
 		}
 	}
+
+	// Auto validated assets on save
+    ValidateAsset_Internal();
 }
 
 bool FFlowAssetEditor::IsTabFocused(const FTabId& TabId) const
