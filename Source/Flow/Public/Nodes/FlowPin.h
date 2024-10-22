@@ -124,7 +124,9 @@ public:
 
 	FFlowPin(const FStringView InPinName, const FText& InPinFriendlyName)
 		: PinName(InPinName)
+#if WITH_EDITORONLY_DATA
 		, PinFriendlyName(InPinFriendlyName)
+#endif
 	{
 	}
 
@@ -136,7 +138,9 @@ public:
 
 	FFlowPin(const FStringView InPinName, const FText& InPinFriendlyName, const FString& InPinTooltip)
 		: PinName(InPinName)
+#if WITH_EDITORONLY_DATA
 		, PinFriendlyName(InPinFriendlyName)
+#endif
 		, PinToolTip(InPinTooltip)
 	{
 	}
