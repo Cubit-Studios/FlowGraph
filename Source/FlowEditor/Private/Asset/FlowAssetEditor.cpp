@@ -200,6 +200,9 @@ void FFlowAssetEditor::SaveAssetAs_Execute()
 
 void FFlowAssetEditor::DoPresaveAssetUpdate()
 {
+	// Auto validated assets on save
+	ValidateAsset_Internal();
+    
 	if (IsValid(FlowAsset))
 	{
 		UFlowGraph* FlowGraph = Cast<UFlowGraph>(FlowAsset->GetGraph());
@@ -208,9 +211,6 @@ void FFlowAssetEditor::DoPresaveAssetUpdate()
 			FlowGraph->OnSave();
 		}
 	}
-
-	// Auto validated assets on save
-    ValidateAsset_Internal();
 }
 
 bool FFlowAssetEditor::IsTabFocused(const FTabId& TabId) const
