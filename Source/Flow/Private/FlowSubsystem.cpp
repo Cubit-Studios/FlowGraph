@@ -14,6 +14,7 @@
 #include "Logging/MessageLog.h"
 #include "Misc/Paths.h"
 #include "UObject/UObjectHash.h"
+#include "VisualLogger/VisualLogger.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FlowSubsystem)
 
@@ -430,7 +431,14 @@ void UFlowSubsystem::RegisterComponent(UFlowComponent* Component)
 		}
 	}
 
-	OnComponentRegistered.Broadcast(Component);
+    OnComponentRegistered.Broadcast(Component);
+    
+#if ENABLE_VISUAL_LOG
+    if (Component)
+    {
+        Component->OnNotifyFromComponent.AddUObject(this, &UFlowSubsystem::OnLogNotifyFromComponent);
+    }
+#endif
 }
 
 void UFlowSubsystem::OnIdentityTagAdded(UFlowComponent* Component, const FGameplayTag& AddedTag)
@@ -476,7 +484,14 @@ void UFlowSubsystem::UnregisterComponent(UFlowComponent* Component)
 		}
 	}
 
-	OnComponentUnregistered.Broadcast(Component);
+    OnComponentUnregistered.Broadcast(Component);
+    
+#if ENABLE_VISUAL_LOG
+    if (Component)
+    {
+        Component->OnNotifyFromComponent.RemoveAll(this);
+    }
+#endif
 }
 
 void UFlowSubsystem::OnIdentityTagRemoved(UFlowComponent* Component, const FGameplayTag& RemovedTag)
@@ -662,5 +677,22 @@ void UFlowSubsystem::FindComponents(const FGameplayTagContainer& Tags, const EGa
 		}
 	}
 }
+
+#if ENABLE_VISUAL_LOG
+void UFlowSubsystem::OnLogNotifyFromComponent(UFlowComponent* Component, const FGameplayTag& Tag)
+{
+    if (Component)
+    {
+        // Text log
+        UE_VLOG(this, LogFlow, Log, TEXT("%s Triggered event: %s"), *Component->IdentityTags.ToString(), *Tag.ToString());
+
+        // Location
+        if (auto OwnerActor = Component->GetOwner())
+        {
+            UE_VLOG_LOCATION(this, LogFlow, Log, OwnerActor->GetActorLocation(), 1.f, FColor::Green, TEXT("%s> Event: %s"), *Component->IdentityTags.ToString(), *Tag.ToString());
+        }
+    }
+}
+#endif
 
 #undef LOCTEXT_NAMESPACE
