@@ -1,6 +1,6 @@
 ﻿{
 	"FileVersion" : 3,
-	"Version" : 2.1,
+	"Version" : 2.0,
 	"FriendlyName" : "Flow",
 	"Description" : "Design-agnostic node editor for scripting game’s flow.",
 	"Category" : "Gameplay",
@@ -31,16 +31,12 @@
 			"Enabled": true
 		},
 		{
-			"Name": "EditorScriptingUtilities",
-			"Enabled": true
+		  "Name": "EngineAssetDefinitions",
+		  "Enabled": true
 		},
 		{
-			"Name": "EngineAssetDefinitions",
-			"Enabled": true
-		},
-		{
-			"Name": "StructUtils",
-			"Enabled": true
+		  "Name": "EditorScriptingUtilities",
+		  "Enabled": true
 		}
 	]
 }
