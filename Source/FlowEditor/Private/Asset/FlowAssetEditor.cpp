@@ -77,10 +77,6 @@ void FFlowAssetEditor::HandleUndoTransaction()
 
 void FFlowAssetEditor::NotifyPostChange(const FPropertyChangedEvent& PropertyChangedEvent, FProperty* PropertyThatChanged)
 {
-	if (PropertyChangedEvent.ChangeType != EPropertyChangeType::Interactive)
-	{
-		GraphEditor->NotifyGraphChanged();
-	}
 }
 
 FName FFlowAssetEditor::GetToolkitFName() const
@@ -454,9 +450,7 @@ void FFlowAssetEditor::ValidateAsset_Internal()
 		ValidationLogListing->AddMessages(LogResults.Messages);
 	}
 	ValidationLogListing->OnDataChanged().Broadcast();
-    
-	// Auto refresh assets to show validation errors
-    RefreshAsset();
+	FlowAsset->GetGraph()->NotifyGraphChanged();
 }
 
 void FFlowAssetEditor::ValidateAsset(FFlowMessageLog& MessageLog)
