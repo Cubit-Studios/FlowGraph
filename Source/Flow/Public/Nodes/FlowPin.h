@@ -147,20 +147,25 @@ public:
 
 	FFlowPin(const FName& InPinName, const FText& InPinFriendlyName)
 		: PinName(InPinName)
+#if WITH_EDITORONLY_DATA
 		, PinFriendlyName(InPinFriendlyName)
+#endif
 	{
 	}
 
 	FFlowPin(const FName& InPinName, const FText& InPinFriendlyName, const FString& InPinTooltip)
 		: PinName(InPinName)
+#if WITH_EDITORONLY_DATA
 		, PinFriendlyName(InPinFriendlyName)
-		, PinToolTip(InPinTooltip)
+#endif
 	{
 	}
 
 	FFlowPin(const FName& InPinName, const FText& InPinFriendlyName, EFlowPinType InFlowPinType, UObject* SubCategoryObject = nullptr)
 		: PinName(InPinName)
+#if WITH_EDITORONLY_DATA
 		, PinFriendlyName(InPinFriendlyName)
+#endif
 	{
 		SetPinType(InFlowPinType, SubCategoryObject);
 	}
