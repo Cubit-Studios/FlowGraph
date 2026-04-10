@@ -21,9 +21,8 @@
 FFlowNodeLevelSequenceEvent UFlowNode_PlayLevelSequence::OnPlaybackStarted;
 FFlowNodeLevelSequenceEvent UFlowNode_PlayLevelSequence::OnPlaybackCompleted;
 
-UFlowNode_PlayLevelSequence::UFlowNode_PlayLevelSequence(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-	, bPlayReverse(false)
+UFlowNode_PlayLevelSequence::UFlowNode_PlayLevelSequence()
+	: bPlayReverse(false)
 	, bUseGraphOwnerAsTransformOrigin(false)
 	, bReplicates(false)
 	, bAlwaysRelevant(false)
@@ -75,9 +74,10 @@ TArray<FFlowPin> UFlowNode_PlayLevelSequence::GetContextOutputs() const
 					{
 						for (const FString& EventName : FlowSection->GetAllEntryPoints())
 						{
-							if (!EventName.IsEmpty() && !Pins.Contains(EventName))
+							FFlowPin NewEventPin(EventName);
+							if (!EventName.IsEmpty() && !Pins.Contains(NewEventPin))
 							{
-								Pins.Emplace(EventName);
+								Pins.Emplace(NewEventPin);
 							}
 						}
 					}
