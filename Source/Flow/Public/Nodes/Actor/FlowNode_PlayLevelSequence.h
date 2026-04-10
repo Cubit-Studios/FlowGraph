@@ -100,7 +100,8 @@ public:
 	virtual void FlushContent() override;
 
 	virtual void InitializeInstance() override;
-	void CreatePlayer();
+	// CUBIT: made virtual so subclasses (e.g. UInfFlowNode_PlaySequence) can customize player creation.
+	virtual void CreatePlayer();
 
 protected:
 	virtual void ExecuteInput(const FName& PinName) override;
